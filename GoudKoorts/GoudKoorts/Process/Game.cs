@@ -11,20 +11,22 @@ using System.Text;
 
 public class Game
 {
+    Controller c;
+
+    public Game() 
+    {
+        c = new Controller();
+        this.Start();
+    }
 	public virtual Controller Controller
 	{
 		get;
 		set;
 	}
 
-	public virtual void InitBoard()
-	{
-		throw new System.NotImplementedException();
-	}
-
 	public virtual void Start()
 	{
-		throw new System.NotImplementedException();
+        c.InitBoard();
 	}
 
 }

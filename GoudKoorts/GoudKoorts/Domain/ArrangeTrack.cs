@@ -9,29 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Controller
+public class ArrangeTrack : Track
 {
-	public virtual BoardView BoardView
-	{
-		get;
-		set;
-	}
-
-	public virtual Board Board
-	{
-		get;
-		set;
-	}
-
-
-    public virtual void InitBoard()
-    {
-        throw new System.NotImplementedException();
-    }
-	public virtual void Step()
-	{
-		throw new System.NotImplementedException();
-	}
-
 }
 
