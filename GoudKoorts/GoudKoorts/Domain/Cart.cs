@@ -8,29 +8,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class Cart
+namespace GoudKoorts.Domain
 {
-	public virtual object bool Filled
-	{
-		get;
-		set;
-	}
+    public class Cart : PlacableObject
+    {
 
-	public virtual Track Track
-	{
-		get;
-		set;
-	}
+        public Cart(Track Field) { this.Filled = true; this.Track = Field; }
+        public virtual bool Filled
+        {
+            get;
+            set;
+        }
 
-	public virtual void Move()
-	{
-		throw new System.NotImplementedException();
-	}
+
+
+        public override void Move()
+        {
+            if (Track.nextTrack != null) {
+                Track.nextTrack.Place(this);
+            }
+        }
+
         override public void Accept(Visitor visitor)
         {
             visitor.Visit(this);
         }
 
+        public override void ChangeFilling()
+        {
+            this.Filled = !this.Filled;
+        }
+    }
 }
 

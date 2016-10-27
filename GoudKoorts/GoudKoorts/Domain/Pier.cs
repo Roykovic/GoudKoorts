@@ -8,18 +8,42 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class Pier : Track
+namespace GoudKoorts.Domain
 {
-	public virtual Boat Boat
-	{
-		get;
-		set;
-	}
-
+    public class Pier : Track
+    {
+        public virtual Boat Boat
+        {
+            get;
+            set;
+        }
         override public void Accept(Visitor visitor)
         {
             visitor.Visit(this);
         }
+        public override bool Place(PlacableObject content)
+        {
+            if (this.content == null)
+            {
+                
+                if (this.previousTrack != null) { this.previousTrack.content = null; }
+                this.content = content;
+                this.content.Track = this;
+                if (this.Up.content != null) { this.Boat = (Boat)this.Up.content; }
+                fillShip();
+                return true;
+            }
+            return false;
+        }
+        public void fillShip() 
+        {
+            if (this.Boat != null) 
+            {
+                Boat.ChangeFilling();
+                content.ChangeFilling();
+                
+            }
+        }
+    }
 }
 

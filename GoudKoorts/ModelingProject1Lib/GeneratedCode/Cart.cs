@@ -11,7 +11,7 @@ using System.Text;
 
 public class Cart
 {
-	public virtual object bool Filled
+	public bool Filled
 	{
 		get;
 		set;

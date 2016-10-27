@@ -41,7 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Domain\Board.cs" />
+    <Compile Include="Domain\ArrangeTrack.cs" />
+    <Compile Include="Domain\EmptyTrack.cs" />
+    <Compile Include="Domain\MovableTrack.cs" />
+    <Compile Include="Domain\PlacableObject.cs" />
+    <Compile Include="Domain\Route.cs" />
+    <Compile Include="Domain\Track.cs" />
+    <Compile Include="Domain\Visitor.cs" />
+    <Compile Include="Presentation\BoardView.cs" />
+    <Compile Include="Domain\Boat.cs" />
+    <Compile Include="Domain\Cart.cs" />
+    <Compile Include="Process\Controller.cs" />
+    <Compile Include="Process\Game.cs" />
+    <Compile Include="Domain\Pier.cs" />
+    <Compile Include="Process\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

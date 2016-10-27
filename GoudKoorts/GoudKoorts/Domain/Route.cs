@@ -8,20 +8,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class Route
+namespace GoudKoorts.Domain
 {
-	public virtual object Track Origin
-	{
-		get;
-		set;
-	}
+    public class Route
+    {
+        public Track FinalField
+        {
+            get;
+            set;
+        }
+        public Track OriginField
+        {
+            get;
+            set;
+        }
 
-	public virtual Track Track
-	{
-		get;
-		set;
-	}
+        public virtual Track Track
+        {
+            get;
+            set;
+        }
 
+    }
 }
 

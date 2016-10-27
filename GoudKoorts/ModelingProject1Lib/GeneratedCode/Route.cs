@@ -11,7 +11,7 @@ using System.Text;
 
 public class Route
 {
-	public virtual object Track Origin
+	public Track Origin
 	{
 		get;
 		set;

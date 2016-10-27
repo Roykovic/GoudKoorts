@@ -11,7 +11,7 @@ using System.Text;
 
 public class Track
 {
-	public virtual object Track nextTrack
+	public virtual Track nextTrack
 	{
 		get;
 		set;
@@ -23,7 +23,7 @@ public class Track
 		set;
 	}
 
-	public virtual void visit(object this)
+	public virtual void visit(Track track)
 	{
 		throw new System.NotImplementedException();
 	}

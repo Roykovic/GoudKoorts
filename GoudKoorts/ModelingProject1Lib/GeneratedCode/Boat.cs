@@ -11,7 +11,7 @@ using System.Text;
 
 public class Boat
 {
-	public virtual object int Cargo
+	public int Cargo
 	{
 		get;
 		set;

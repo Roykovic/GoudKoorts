@@ -11,7 +11,7 @@ using System.Text;
 
 public class BoardView
 {
-	public virtual void Show(object Board board)
+	public virtual void Show(Board board)
 	{
 		throw new System.NotImplementedException();
 	}
