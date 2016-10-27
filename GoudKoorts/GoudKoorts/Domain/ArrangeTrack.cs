@@ -8,8 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class ArrangeTrack : Track
+namespace GoudKoorts.Domain
 {
+    public class ArrangeTrack : Track
+    {
+        override public void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
+    }
+
 }
 

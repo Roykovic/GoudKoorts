@@ -17,5 +17,9 @@ public class Pier : Track
 		set;
 	}
 
+        override public void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
 }
 

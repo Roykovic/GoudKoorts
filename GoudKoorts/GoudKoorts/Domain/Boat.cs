@@ -21,6 +21,10 @@ public class Boat
 	{
 		throw new System.NotImplementedException();
 	}
+        override public void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
 
 }
 

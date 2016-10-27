@@ -28,5 +28,9 @@ public class Track
 		throw new System.NotImplementedException();
 	}
 
+        public virtual void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
 }
 

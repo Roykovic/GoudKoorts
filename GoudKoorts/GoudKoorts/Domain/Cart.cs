@@ -27,6 +27,10 @@ public class Cart
 	{
 		throw new System.NotImplementedException();
 	}
+        override public void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
 
 }
 
