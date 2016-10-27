@@ -27,6 +27,7 @@ namespace GoudKoorts.Domain
             if (Track.nextTrack != null) {
                return Track.nextTrack.Place(this);
             }
+            
             this.Track.content = null;
             this.Track = null;
             return true;

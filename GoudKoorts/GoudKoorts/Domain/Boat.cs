@@ -16,7 +16,14 @@ namespace GoudKoorts.Domain
         public virtual int Cargo
         {
             get;
-            set;
+            set 
+            { 
+                if (Cargo > 7) 
+                { 
+                    this.Move(); 
+                
+                }
+            }
         }
 
         public override bool Move()

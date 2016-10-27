@@ -19,6 +19,7 @@ namespace Goudkoorts.Process
         public Thread show;
         public bool newStep;
         public bool gameOver;
+        public int interval = 5000;
         public Controller()
         {
             this.model = new Board(11, 9);
@@ -245,24 +246,30 @@ namespace Goudkoorts.Process
                     var previous = current.previousTrack;
                     if (current.content != null)
                     {
-                       gameOver = !current.content.Move();
+                       current.content.Move();
                     }
+                    
                     current = previous;
                 }
+                if (model.boardArray[1, 0].content != null) 
+                { 
+                    model.boardArray[1, 0].content = null; 
+                }
             }
-            rnd = new Random();
-            int randInt = rnd.Next(6);
-            if (model.Routes.Length > randInt)
-            {
-                var field = model.Routes[randInt].OriginField;
-                field.Place(new Cart(field));
-            }
+
+            //rnd = new Random();
+            //int randInt = rnd.Next(6);
+            //if (model.Routes.Length > randInt)
+            //{
+            //    var field = model.Routes[randInt].OriginField;
+            //    field.Place(new Cart(field));
+            //}
 
         }
         public void timer()
         {
             newStep = false;
-            int timer = 0;
+            int timer = 5;
             show = new Thread(() =>
             {
                 while (!newStep)
@@ -272,7 +279,7 @@ namespace Goudkoorts.Process
 
                     InitRoutes();
                     view.Show(model, timer);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(interval);
                     timer--;
                 };
             });
@@ -285,6 +292,7 @@ namespace Goudkoorts.Process
 
         public virtual void Step()
         {
+            if (interval > 500) { interval = interval - 100; }
             newStep = true;
             moveCarts();
             if (!gameOver) { timer(); }
