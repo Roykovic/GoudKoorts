@@ -8,20 +8,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-public class Board
+namespace GoudKoorts.Domain
 {
-	public virtual IEnumerable<Route> Route
-	{
-		get;
-		set;
-	}
+    public class Board
+    {
+        public Track[,] boardArray
+        {
+            get;
+            set;
+        }
+        public int height
+        {
+            get;
+            set;
+        }
+        public int width
+        {
+            get;
+            set;
+        }
+        public String boardString
+        {
+            get;
+            set;
+        }
+        public Board(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            this.Routes = new Route[3];
+            this.MovableTracks = new List<MovableTrack>();
+            boardString = "        B   -------K--┐          |1-┐ ┌---┐ |  @-@   @-┘2-┘ └┐ ┌┘       @-@   3----┘ └--┐aaaaaaaa--┘ ";
+        }
+        public virtual Route[] Routes
+        {
+            get;
+            set;
+        }
 
-	public virtual IEnumerable<Cart> Cart
-	{
-		get;
-		set;
-	}
+        public virtual IEnumerable<Cart> Cart
+        {
+            get;
+            set;
+        }
+        public virtual List<MovableTrack> MovableTracks
+        {
+            get;
+            set;
+        }
 
+    }
 }
 
