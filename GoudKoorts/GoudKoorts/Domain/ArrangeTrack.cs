@@ -16,7 +16,18 @@ namespace GoudKoorts.Domain
         {
             visitor.Visit(this);
         }
+        public override bool Place(PlacableObject content)
+        {
+            if (this.content == null)
+            {
+                if (this.previousTrack != null) { this.previousTrack.content = null; }
+                this.content = content;
+                this.content.Track = this;
+                return true;
+            }
+            return true;
+        }
     }
-
+    
 }
 

@@ -18,6 +18,7 @@ namespace Goudkoorts.Process
         public Random rnd;
         public Thread show;
         public bool newStep;
+        public bool gameOver;
         public Controller()
         {
             this.model = new Board(11, 9);
@@ -38,7 +39,13 @@ namespace Goudkoorts.Process
         public void go()
         {
             InitBoard();
-           
+            rnd = new Random();
+            int randInt = rnd.Next(3);
+            if (model.Routes.Length > randInt)
+            {
+                var field = model.Routes[randInt].OriginField;
+                field.Place(new Cart(field));
+            }
             timer();
         }
         public void askInput()
@@ -49,8 +56,17 @@ namespace Goudkoorts.Process
                 view.ShowError("Één of meerdere elementen zijn niet ingevuld of het ingevulde getal bevat te veel cijfers");
                 askInput();
             }
-            int chosenTrack = input[0] - '0';
-            int chosenCorner = input[1] - '0';
+            int chosenTrack = 0;
+            int chosenCorner = 0;
+            try
+            {
+                chosenTrack = input[0] - '0';
+                chosenCorner = input[1] - '0';
+            }
+            catch (Exception e)
+            {
+                askInput();
+            }
             if (chosenTrack > 5 || chosenTrack < 1)
             {
                 view.ShowError("Er bestaat geen draaibare rails met nummer " + chosenTrack);
@@ -158,11 +174,11 @@ namespace Goudkoorts.Process
 
         public void InitRoutes()
         {
-            
+
             foreach (Route r in model.Routes)
             {
                 r.FinalField = null;
-                
+
                 var current = r.OriginField;
                 Track oldCurrent = current;
                 var next = current.Right;
@@ -229,12 +245,19 @@ namespace Goudkoorts.Process
                     var previous = current.previousTrack;
                     if (current.content != null)
                     {
-                        current.content.Move();
+                       gameOver = !current.content.Move();
                     }
                     current = previous;
                 }
             }
-            
+            rnd = new Random();
+            int randInt = rnd.Next(6);
+            if (model.Routes.Length > randInt)
+            {
+                var field = model.Routes[randInt].OriginField;
+                field.Place(new Cart(field));
+            }
+
         }
         public void timer()
         {
@@ -245,14 +268,8 @@ namespace Goudkoorts.Process
                 while (!newStep)
                 {
                     if (timer < 0) { Step(); }
-                    rnd = new Random();
-                    int randInt = rnd.Next(6);
-                    if (model.Routes.Length > randInt)
-                    {
-                        var field = model.Routes[randInt].OriginField;
-                        field.Place(new Cart(field));
-                    }
                     
+
                     InitRoutes();
                     view.Show(model, timer);
                     Thread.Sleep(1000);
@@ -270,7 +287,8 @@ namespace Goudkoorts.Process
         {
             newStep = true;
             moveCarts();
-            timer();
+            if (!gameOver) { timer(); }
+            else { view.gameOver(); }
         }
 
         public Tuple<int, int> CoordinatesOf<T>(T[,] matrix, T value)

@@ -19,7 +19,7 @@ namespace GoudKoorts.Domain
             set;
         }
 
-        public override void Move()
+        public override bool Move()
         {
             throw new System.NotImplementedException();
         }

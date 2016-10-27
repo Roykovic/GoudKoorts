@@ -34,7 +34,7 @@ namespace GoudKoorts.Domain
             if (this.content == null)
             {
                 if (this.previousTrack == null || this.previousTrack.content != content) {return false; }
-                if (this.nextTrack == null||this.nextTrack.corner == -1) { return false; }
+                if (this.nextTrack == null||this.nextTrack.corner == -1) { return true; }
                 this.previousTrack.content = null;
                 this.content = content;
                 this.content.Track = this;

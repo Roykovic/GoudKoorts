@@ -22,11 +22,14 @@ namespace GoudKoorts.Domain
 
 
 
-        public override void Move()
+        public override bool Move()
         {
             if (Track.nextTrack != null) {
-                Track.nextTrack.Place(this);
+               return Track.nextTrack.Place(this);
             }
+            this.Track.content = null;
+            this.Track = null;
+            return true;
         }
 
         override public void Accept(Visitor visitor)

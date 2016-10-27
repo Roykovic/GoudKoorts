@@ -9,7 +9,7 @@ namespace GoudKoorts.Domain
     abstract public class PlacableObject
     {
        public abstract void Accept(Visitor visitor);
-       public abstract void Move();
+       public abstract bool Move();
        public abstract void ChangeFilling();
        public Track Track;
     }

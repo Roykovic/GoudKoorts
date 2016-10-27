@@ -49,7 +49,13 @@ namespace Goudkoorts.presentation
             _fieldRepresentation = ' ';
             if (visitee.content != null) { visitee.content.Accept(this); }
         }
-       
+
+        public void gameOver() 
+        {
+            Console.Clear();
+            Console.WriteLine("Game Over");
+            Console.ReadLine();
+        }
         override public void Visit(Track visitee)
         {
             int caseSwitch = visitee.corner;
