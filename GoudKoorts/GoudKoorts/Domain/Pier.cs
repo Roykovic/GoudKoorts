@@ -12,10 +12,11 @@ namespace GoudKoorts.Domain
 {
     public class Pier : Track
     {
+        public Boat _boat;
         public virtual Boat Boat
         {
-            get;
-            set;
+            get{return _boat;}
+            set{_boat = value; _boat.onPier = true;}
         }
         override public void Accept(Visitor visitor)
         {
@@ -37,7 +38,7 @@ namespace GoudKoorts.Domain
         }
         public void fillShip() 
         {
-            if (this.Boat != null) 
+            if (this.Boat != null && !Boat.moving) 
             {
                 Boat.ChangeFilling();
                 content.ChangeFilling();

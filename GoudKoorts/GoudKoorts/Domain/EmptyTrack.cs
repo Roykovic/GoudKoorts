@@ -27,14 +27,12 @@ namespace GoudKoorts.Domain
         }
         public override bool Place(PlacableObject content)
         {
-            if (this.content == null)
-            {
-                if (this.Right != null) { this.Right.content = null; }
+            
+                this.Right.content = null;
                 this.content = content;
                 this.content.Track = this;
                 return true;
-            }
-            return false;
+            
         }
     }
 }
