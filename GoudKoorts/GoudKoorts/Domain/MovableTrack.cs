@@ -23,6 +23,7 @@ namespace GoudKoorts.Domain
         }
         public void move() 
         {
+            if (this.content != null) { return; }
             if (this.corner < 3) { this.corner = this.corner + 2; }
             else{this.corner = this.corner - 2;}
         }
@@ -32,10 +33,11 @@ namespace GoudKoorts.Domain
         }
         public override bool Place(PlacableObject content)
         {
+            if (this.previousTrack == null || this.previousTrack.content != content) { return true; }
+            if (this.nextTrack == null || this.nextTrack.corner == -1) { return true; }
             if (this.content == null)
             {
-                if (this.previousTrack == null || this.previousTrack.content != content) {return false; }
-                if (this.nextTrack == null||this.nextTrack.corner == -1) { return true; }
+                
                 this.previousTrack.content = null;
                 this.content = content;
                 this.content.Track = this;

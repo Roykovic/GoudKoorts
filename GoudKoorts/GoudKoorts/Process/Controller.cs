@@ -19,7 +19,7 @@ namespace Goudkoorts.Process
         public Thread show;
         public bool newStep;
         public bool gameOver;
-        public int timerInt = 0;
+        public int timerInt = 20;
         public Controller()
         {
             this.model = new Board(11, 9);
@@ -242,7 +242,7 @@ namespace Goudkoorts.Process
                     var previous = current.previousTrack;
                     if (current.content != null)
                     {
-                       current.content.Move();
+                        if (!current.content.Move()) { view.gameOver(); }
                     }
                     
                     current = previous;
@@ -255,12 +255,12 @@ namespace Goudkoorts.Process
                 { 
 
                         model.boardArray[0, model.width - 1].content = new Boat(model.boardArray[0, model.width -1]);
-
+                        model.boat = (Boat)model.boardArray[0, model.width - 1].content;
                 }
             }
 
             rnd = new Random();
-            int randInt = rnd.Next(4);
+int randInt = rnd.Next(6);
             if (model.Routes.Length > randInt)
             {
                 var field = model.Routes[randInt].OriginField;

@@ -31,12 +31,10 @@ namespace GoudKoorts.Domain
 
         public override bool Move()
         {
-            if (Track == null) 
-            { 
-            
-            }
+            if (Track.y == 7) { onPier = true; }
             if (Track.Right == null||!onPier) 
             {
+                
                 return Track.Left.Place(this);
             }
              if (Cargo < 8) { return false ; }

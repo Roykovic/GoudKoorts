@@ -16,7 +16,7 @@ namespace GoudKoorts.Domain
         public virtual Boat Boat
         {
             get{return _boat;}
-            set{_boat = value; _boat.onPier = true;}
+            set{_boat = value;}
         }
         override public void Accept(Visitor visitor)
         {
@@ -30,7 +30,9 @@ namespace GoudKoorts.Domain
                 if (this.previousTrack != null) { this.previousTrack.content = null; }
                 this.content = content;
                 this.content.Track = this;
-                if (this.Up.content != null) { this.Boat = (Boat)this.Up.content; }
+                if (this.Up.content != null) { 
+                    this.Boat = (Boat)this.Up.content; 
+                }
                 fillShip();
                 return true;
             }
