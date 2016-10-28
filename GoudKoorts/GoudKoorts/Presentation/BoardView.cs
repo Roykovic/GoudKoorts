@@ -33,12 +33,11 @@ namespace Goudkoorts.presentation
                 }
                 Console.Write("\n");
             }
-            Console.WriteLine("\nTyp het nummer van de draaibare rails  ");
-            Console.WriteLine("Met direct daarna de gewenste hoek: 0 = -, 1 = ┐. 2 = ┌, 3 = ┘, 4 = └");
+            Console.WriteLine("Toets het  nummer van de rails die u wilt draaien in");
         }
-        public String askInput() 
+        public System.ConsoleKeyInfo askInput() 
         {
-            return Console.ReadLine();
+            return Console.ReadKey();
         }
         public void ShowError(String error) 
         {

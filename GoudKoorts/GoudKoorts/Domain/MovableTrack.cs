@@ -21,9 +21,10 @@ namespace GoudKoorts.Domain
             get;
             set;
         }
-        public void move(int direction) 
+        public void move() 
         {
-            this.corner = direction;
+            if (this.corner < 3) { this.corner = this.corner + 2; }
+            else{this.corner = this.corner - 2;}
         }
         override public void Accept(Visitor visitor)
         {

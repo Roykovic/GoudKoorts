@@ -19,7 +19,7 @@ namespace Goudkoorts.Process
         public Thread show;
         public bool newStep;
         public bool gameOver;
-        public int interval = 5000;
+        public int timerInt = 20;
         public Controller()
         {
             this.model = new Board(11, 9);
@@ -51,35 +51,18 @@ namespace Goudkoorts.Process
         }
         public void askInput()
         {
-            var input = view.askInput();
-            if (input.Length != 2)
-            {
-                view.ShowError("Één of meerdere elementen zijn niet ingevuld of het ingevulde getal bevat te veel cijfers");
-                askInput();
-            }
-            int chosenTrack = 0;
-            int chosenCorner = 0;
-            try
-            {
-                chosenTrack = input[0] - '0';
-                chosenCorner = input[1] - '0';
-            }
-            catch (Exception e)
-            {
-                askInput();
-            }
-            if (chosenTrack > 5 || chosenTrack < 1)
-            {
-                view.ShowError("Er bestaat geen draaibare rails met nummer " + chosenTrack);
-                askInput();
-            }
-            if (chosenCorner > 4 || chosenTrack < 0)
-            {
-                view.ShowError("Er bestaat geen hoek met nummer " + chosenCorner);
-                askInput();
-            }
 
-            model.MovableTracks[chosenTrack - 1].corner = chosenCorner;
+            var input = view.askInput();
+            var keyInt = input.KeyChar - '0';
+            if (keyInt > 5 || keyInt < 1)
+            {
+                view.ShowError("Er bestaat geen draaibare rails met nummer " + keyInt);
+                askInput();
+            }
+            try { model.MovableTracks[keyInt - 1].move(); }
+            catch (Exception e) { view.ShowError(e.ToString()); askInput(); }
+            
+
         }
         public virtual void InitBoard()
         {
@@ -95,7 +78,8 @@ namespace Goudkoorts.Process
                     {
                         case 'B':
                             boardArray[x, y] = new EmptyTrack();
-                            boardArray[x, y].content = new Boat();
+                            boardArray[x, y].content = new Boat(boardArray[x, y]);
+                            model.boat = (Boat) boardArray[x, y].content;
                             break;
                         case '-':
                             boardArray[x, y] = new Track();
@@ -150,6 +134,11 @@ namespace Goudkoorts.Process
                 }
             }
             model.boardArray = boardArray;
+            model.MovableTracks[0].corner = 2;
+            model.MovableTracks[1].corner = 1;
+            model.MovableTracks[2].corner = 2;
+            model.MovableTracks[3].corner = 2;
+            model.MovableTracks[4].corner = 1;
             InitNeighbours();
         }
 
@@ -157,14 +146,20 @@ namespace Goudkoorts.Process
         {
             foreach (Track t in model.boardArray)
             {
+                var arr = model.boardArray;
+                var coords = CoordinatesOf<Track>(arr, t);
+                var y = coords.Item1;
+                var x = coords.Item2;
                 if (t.corner >= 0)
                 {
-                    var arr = model.boardArray;
-                    var coords = CoordinatesOf<Track>(arr, t);
-                    var y = coords.Item1;
-                    var x = coords.Item2;
+                    
                     if (y < model.height - 1) { t.Down = arr[y + 1, x]; }
                     if (y > 0) { t.Up = arr[y - 1, x]; }
+                    if (x > 0) { t.Left = arr[y, x - 1]; }
+                    if (x < model.width - 1) { t.Right = arr[y, x + 1]; }
+                }
+                else 
+                {
                     if (x > 0) { t.Left = arr[y, x - 1]; }
                     if (x < model.width - 1) { t.Right = arr[y, x + 1]; }
                 }
@@ -255,32 +250,33 @@ namespace Goudkoorts.Process
                 { 
                     model.boardArray[1, 0].content = null; 
                 }
+                model.boat.Move();
             }
 
-            //rnd = new Random();
-            //int randInt = rnd.Next(6);
-            //if (model.Routes.Length > randInt)
-            //{
-            //    var field = model.Routes[randInt].OriginField;
-            //    field.Place(new Cart(field));
-            //}
+            rnd = new Random();
+            int randInt = rnd.Next(6);
+            if (model.Routes.Length > randInt)
+            {
+                var field = model.Routes[randInt].OriginField;
+                field.Place(new Cart(field));
+            }
 
         }
         public void timer()
         {
             newStep = false;
-            int timer = 5;
+            int counter = timerInt;
             show = new Thread(() =>
             {
                 while (!newStep)
                 {
-                    if (timer < 0) { Step(); }
+                    if (counter < 0) { Step(); }
                     
 
                     InitRoutes();
-                    view.Show(model, timer);
-                    Thread.Sleep(interval);
-                    timer--;
+                    view.Show(model, counter);
+                    Thread.Sleep(1000);
+                    counter--;
                 };
             });
             show.Start();
@@ -292,7 +288,7 @@ namespace Goudkoorts.Process
 
         public virtual void Step()
         {
-            if (interval > 500) { interval = interval - 100; }
+            if (timerInt > 5) { timerInt--; }
             newStep = true;
             moveCarts();
             if (!gameOver) { timer(); }

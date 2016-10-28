@@ -13,14 +13,21 @@ namespace GoudKoorts.Domain
 {
     public class Boat : PlacableObject
     {
+        public Boat(Track track) { this.Track = track; }
+        public int _cargo;
         public virtual int Cargo
         {
-            get;
+            get
+            {
+                return _cargo;
+            
+            }
             set 
-            { 
-                if (Cargo > 7) 
+            {
+                _cargo = value;
+                if (_cargo > 7) 
                 { 
-                    this.Move(); 
+                 //   this.Move(); 
                 
                 }
             }
@@ -28,7 +35,19 @@ namespace GoudKoorts.Domain
 
         public override bool Move()
         {
-            throw new System.NotImplementedException();
+             if (_cargo < 8) { return true ; }
+             if (Track != null)
+             {
+
+                 if (Track.Left != null)
+                 {
+                     return Track.Left.Place(this);
+                 }
+
+                 this.Track.content = null;
+                 this.Track = null;
+             }
+            return true;
         }
 
         override public void Accept(Visitor visitor)

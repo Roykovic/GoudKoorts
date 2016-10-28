@@ -57,6 +57,7 @@ namespace GoudKoorts.Domain
             set;
         }
 
+        public Boat boat;
     }
 }
 
